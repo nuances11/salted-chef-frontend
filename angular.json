@@ -31,9 +31,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/plugins/global/plugins.bundle.css",
+              "src/assets/css/style.bundle.css",
+              "src/assets/css/skins/header/base/light.css",
+              "src/assets/css/skins/header/menu/light.css",
+              "src/assets/css/skins/brand/dark.css",
+              "src/assets/css/skins/aside/dark.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/plugins/global/plugins.bundle.js",
+              "src/assets/js/scripts.bundle.js"
+            ]
           },
           "configurations": {
             "production": {
