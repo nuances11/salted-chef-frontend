@@ -1,13 +1,19 @@
-<app-header></app-header>
-
+<app-header *ngIf="isSignedIn"></app-header>
 <div class="kt-grid kt-grid--hor kt-grid--root">
-  <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
 
-  <!-- Start Aside -->
-  <app-page-aside></app-page-aside>
+  <ng-template #elseBlock>
+    <div *ngIf="isSignedIn" class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+        <app-page-header></app-page-header>
+        <!-- Start Aside -->
+        <app-page-aside></app-page-aside>
 
-  <!-- Start Wrapper -->
-  <app-page></app-page>
+        <app-page-content *ngIf="isSignedIn"></app-page-content>
 
-  </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <router-outlet *ngIf="!isSignedIn; else elseBlock"></router-outlet>
+  <!-- <app-log-in *ngIf="!isSignedIn"></app-log-in> -->
 </div>

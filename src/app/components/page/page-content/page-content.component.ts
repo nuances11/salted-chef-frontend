@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthStateService } from 'src/app/service/shared/auth-state.service';
 
 @Component({
   selector: 'app-page-content',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageContentComponent implements OnInit {
 
-  constructor() { }
+  isSignedIn?: boolean;
+
+  constructor(private auth: AuthStateService) { }
 
   ngOnInit(): void {
+    this.auth.userAuthState.subscribe(val => {
+        this.isSignedIn = val;
+    });
   }
 
 }

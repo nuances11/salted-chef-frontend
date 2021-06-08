@@ -5,6 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class TokenService {
 
+  // store the URL so we can redirect after logging in
+  redirectUrl: string | null = null;
+
+  _isLoggedIn = false;
+
   private issuer = {
     login: 'http://127.0.0.1:8000/api/auth/login'
   }
@@ -22,7 +27,6 @@ export class TokenService {
   // Verify the token
   isValidToken(){
     const token = this.getToken();
-
     if(token){
       const payload = this.payload(token);
       if(payload){
@@ -42,7 +46,11 @@ export class TokenService {
 
   // User state based on valid token
   isLoggedIn() {
-    return this.isValidToken();
+    if (this.isValidToken()) {
+      this._isLoggedIn = true;
+    }
+    // return this.isValidToken();
+    return this._isLoggedIn;
   }
 
   // Remove token

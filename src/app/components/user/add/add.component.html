@@ -1,17 +1,47 @@
 <!--Begin:: App Content-->
-<div *ngIf="user" class="kt-grid__item kt-grid__item--fluid kt-app__content">
+<div class="kt-grid__item kt-grid__item--fluid kt-app__content">
   <div class="row">
     <div class="col-xl-12">
       <div class="kt-portlet">
         <div class="kt-portlet__head">
           <div class="kt-portlet__head-label">
-            <h3 class="kt-portlet__head-title">Personal Information <small>update your personal informaiton</small></h3>
+            <h3 class="kt-portlet__head-title">Personal Information <small>add your personal information</small></h3>
           </div>
         </div>
-        <form class="kt-form kt-form--label-right">
+        <form class="kt-form kt-form--label-right" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <div class="kt-portlet__body">
             <div class="kt-section kt-section--first">
               <div class="kt-section__body">
+                <div *ngIf="hasErrors" class="alert alert-solid-danger alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
+                  <div class="alert-icon"><i class="fa fa-exclamation-triangle"></i></div>
+                    <div class="alert-text">
+                      <!-- Errors -->
+                      <div *ngIf="errors.first_name">
+                        {{ errors.first_name }}
+                      </div>
+                      <div *ngIf="errors.last_name">
+                        {{ errors.last_name }}
+                      </div>
+                      <div *ngIf="errors.email">
+                        {{ errors.email }}
+                      </div>
+                      <div *ngIf="errors.password">
+                          {{ errors.password }}
+                      </div>
+                      <div *ngIf="errors.password_confirmation">
+                          {{ errors.password_confirmation }}
+                      </div>
+                    </div>
+                  <div class="alert-close">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true"><i class="la la-close"></i></span>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="showAlert" class="alert alert-success" role="alert">
+                  <div class="alert-icon"><i class="flaticon2-checkmark"></i></div>
+                  <div class="alert-text">{{ alertString }}</div>
+                </div>
                 <div class="row">
                   <label class="col-xl-3"></label>
                   <div class="col-lg-9 col-xl-6">
@@ -36,13 +66,13 @@
                 <div class="form-group row">
                   <label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
                   <div class="col-lg-9 col-xl-6">
-                    <input class="form-control" type="text" [value]="user?.first_name">
+                    <input class="form-control" type="text" formControlName="first_name">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
                   <div class="col-lg-9 col-xl-6">
-                    <input class="form-control" type="text" [value]="user?.last_name">
+                    <input class="form-control" type="text" formControlName="last_name">
                   </div>
                 </div>
                 <div class="row">
@@ -56,7 +86,7 @@
                   <div class="col-lg-9 col-xl-6">
                     <div class="input-group">
                       <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                      <input type="text" [disabled]="isDisabled" class="form-control" [value]="user?.email" placeholder="Enter email" aria-describedby="basic-addon1">
+                      <input type="text" class="form-control" placeholder="Enter email" aria-describedby="basic-addon1" formControlName="email">
                     </div>
                     <span class="form-text text-muted">We'll never share your email with anyone else.</span>
                   </div>
@@ -64,25 +94,19 @@
                 <div class="row">
                   <label class="col-xl-3"></label>
                   <div class="col-lg-9 col-xl-6">
-                    <h3 class="kt-section__title kt-section__title-sm">Update Password:</h3>
+                    <h3 class="kt-section__title kt-section__title-sm">Set Password:</h3>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">Old Password</label>
+                  <label class="col-xl-3 col-lg-3 col-form-label">Password</label>
                   <div class="col-lg-9 col-xl-6">
-                    <input class="form-control" type="password">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">New Password</label>
-                  <div class="col-lg-9 col-xl-6">
-                    <input class="form-control" type="password">
+                    <input class="form-control" type="password" formControlName="password">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-xl-3 col-lg-3 col-form-label">Confirm Password</label>
                   <div class="col-lg-9 col-xl-6">
-                    <input class="form-control" type="password">
+                    <input class="form-control" type="password" formControlName="password_confirmation">
                   </div>
                 </div>
               </div>
@@ -94,8 +118,8 @@
                 <div class="col-lg-3 col-xl-3">
                 </div>
                 <div class="col-lg-9 col-xl-9">
-                  <button type="reset" class="btn btn-success">Submit</button>&nbsp;
-                  <button type="reset" class="btn btn-secondary">Cancel</button>
+                  <button type="submit" class="btn btn-success">Submit</button>&nbsp;
+                  <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
               </div>
             </div>

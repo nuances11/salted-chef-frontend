@@ -14,18 +14,30 @@ import { PageContentComponent } from './components/page/page-content/page-conten
 import { PageHeaderComponent } from './components/page/includes/page-header/page-header.component';
 import { PageComponent } from './components/page/page.component';
 import { CapitalizedFirstLetterPipe } from './pipes/capitalized-first-letter.pipe';
+import { ProfileModule } from './components/profile/profile.module';
+import { InputComponent } from './components/input/input.component';
+import { AddComponent } from './components/user/add/add.component';
+import { ListComponent } from './components/user/list/list.component';
+import { ResultComponent } from './components/result/result.component';
+import { CurrentComponent } from './components/chef/current/current.component';
+import { DatabaseComponent } from './components/chef/database/database.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogInComponent,
-    ProfileComponent,
     HeaderComponent,
     PageAsideComponent,
     PageContentComponent,
     PageHeaderComponent,
     PageComponent,
-    CapitalizedFirstLetterPipe
+    CapitalizedFirstLetterPipe,
+    InputComponent,
+    AddComponent,
+    ListComponent,
+    ResultComponent,
+    CurrentComponent,
+    DatabaseComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +45,7 @@ import { CapitalizedFirstLetterPipe } from './pipes/capitalized-first-letter.pip
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ProfileModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

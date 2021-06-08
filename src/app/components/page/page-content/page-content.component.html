@@ -16,17 +16,7 @@
   <!-- begin:: Content -->
   <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 
-    <div class="row">
-      <div class="col-xl-12">
-
-        <div class="kt-portlet">
-          <div class="kt-portlet__body">
-            <h3>This is the page content</h3>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <router-outlet [hidden]="!isSignedIn"></router-outlet>
 
   </div>
 

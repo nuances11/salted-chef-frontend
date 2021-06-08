@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 
 // User interface
 export class User {
+  first_name?: String;
+  last_name?: String;
   email?: String;
   password?: String;
   password_confirmation?: String
@@ -15,6 +17,11 @@ export class User {
 export class AuthService {
 
   constructor(private http: HttpClient) { }
+
+  // User registration
+  register(user: User): Observable<any> {
+    return this.http.post('http://127.0.0.1:8000/api/auth/register', user);
+  }
 
   // Login
   signin(user: User): Observable<any> {

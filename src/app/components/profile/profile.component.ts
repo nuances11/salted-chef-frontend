@@ -19,11 +19,12 @@ export class User {
 })
 export class ProfileComponent implements OnInit {
 
-  UserProfile?: User;
+  user?: User;
+  isDisabled: boolean = true;
 
   constructor(public authService: AuthService) {
     this.authService.profileUser().subscribe((data:any) => {
-      this.UserProfile = data;
+      this.user = data;
     })
   }
 

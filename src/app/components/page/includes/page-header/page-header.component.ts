@@ -41,14 +41,12 @@ export class PageHeaderComponent implements OnInit {
 
   // Signout
   signOut() {
-    console.log('logout');
     this.auth.setAuthState(false);
     this.token.removeToken();
-    this.router.navigate(['login']);
-  }
-
-  capitalizedFirstLetter(string: any) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    this.router.navigate(['login'])
+    .then(() => {
+      window.location.reload();
+    });
   }
 
 }
