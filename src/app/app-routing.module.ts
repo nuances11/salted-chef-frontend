@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { LoggedInAuthGuard } from './auth/logged-in-auth.guard';
+import { ChefUploadComponent } from './components/chef/chef-upload/chef-upload.component';
 import { CurrentComponent } from './components/chef/current/current.component';
 import { DatabaseComponent } from './components/chef/database/database.component';
 import { InputComponent } from './components/input/input.component';
@@ -10,6 +11,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileModule} from './components/profile/profile.module';
 import { ResultComponent } from './components/result/result.component';
 import { AddComponent } from './components/user/add/add.component';
+import { EditComponent } from './components/user/edit/edit.component';
 import { ListComponent } from './components/user/list/list.component';
 const routes: Routes = [
   {
@@ -49,6 +51,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'chef/upload',
+    component: ChefUploadComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'user/add',
     component: AddComponent,
     canActivate: [AuthGuard]
@@ -56,6 +63,11 @@ const routes: Routes = [
   {
     path: 'user/list',
     component: ListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'user/get/:id',
+    component: EditComponent,
     canActivate: [AuthGuard]
   }
 

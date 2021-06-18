@@ -21,6 +21,11 @@ import { ListComponent } from './components/user/list/list.component';
 import { ResultComponent } from './components/result/result.component';
 import { CurrentComponent } from './components/chef/current/current.component';
 import { DatabaseComponent } from './components/chef/database/database.component';
+import { DataTablesModule } from 'angular-datatables';
+import { EditComponent } from './components/user/edit/edit.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { ChefUploadComponent } from './components/chef/chef-upload/chef-upload.component';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,9 @@ import { DatabaseComponent } from './components/chef/database/database.component
     ListComponent,
     ResultComponent,
     CurrentComponent,
-    DatabaseComponent
+    DatabaseComponent,
+    EditComponent,
+    ChefUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +52,10 @@ import { DatabaseComponent } from './components/chef/database/database.component
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ProfileModule
+    ProfileModule,
+    DataTablesModule,
+    AgGridModule.withComponents([]),
+    NgxCsvParserModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

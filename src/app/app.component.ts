@@ -11,6 +11,7 @@ import { TokenService } from './service/shared/token.service';
 export class AppComponent implements OnInit {
   title = 'chef-frontend';
   isSignedIn?: boolean;
+  isJqueryWorking: any;
 
   constructor(
     private auth: AuthStateService,

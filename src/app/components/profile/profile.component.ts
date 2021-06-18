@@ -1,16 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/shared/auth.service';
+import { User } from 'src/app/user';
 
-// User interface
-export class User {
-  full_name?: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  role?: string;
-  role_radable_name?: string;
-  id?: string;
-}
 
 @Component({
   selector: 'app-profile',

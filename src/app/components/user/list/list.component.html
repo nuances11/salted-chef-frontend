@@ -1,1 +1,65 @@
-<p>list works!</p>
+<div class="kt-portlet kt-portlet--mobile">
+  <div class="kt-portlet__head kt-portlet__head--lg">
+    <div class="kt-portlet__head-label">
+      <span class="kt-portlet__head-icon">
+        <i class="kt-font-brand flaticon2-line-chart"></i>
+      </span>
+      <h3 class="kt-portlet__head-title">
+        User List
+      </h3>
+      <ng-container *ngIf="showActionBtn">
+        &nbsp;
+        &nbsp;
+        <i class="kt-font-brand la la-angle-double-right"></i>
+        <h3 class="kt-portlet__head-title">
+          {{ selectedItem }}
+        </h3>
+      </ng-container>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+      <div class="kt-portlet__head-wrapper">
+        <div class="kt-portlet__head-actions">
+          <ng-container *ngIf="!showActionBtn">
+            <a [routerLink]="['/user/add']" class="btn btn-brand btn-elevate btn-icon-sm">
+              <i class="la la-plus"></i>
+              New Record
+            </a>
+          </ng-container>
+          <ng-container *ngIf="showActionBtn">
+            <button [attr.data-id]="selectedId" [routerLink]="['/user', 'get', selectedId]" type="button" class="btn btn-warning btn-elevate">
+              <i class="la la-pencil-square-o"></i>
+              Edit
+            </button>
+            &nbsp;
+            <button [attr.data-id]="selectedId" (click)="deleteUser(selectedId)" type="button" class="btn btn-danger btn-elevate">
+              <i class="la la-trash-o"></i>
+              Delete
+            </button>
+            &nbsp;
+            <button (click)="cancelAction()" type="button" class="btn btn-light btn-elevate">
+              <i class="la la-close"></i>
+              Cancel
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kt-portlet__body">
+
+    <ag-grid-angular
+      #agGrid
+      rowAnimation
+      pagination
+      paginationPageSize="10"
+      style="width: 100%; height: 500px;"
+      class="ag-theme-alpine"
+      [rowData]="users"
+      [columnDefs]="columnDefs"
+      (onGridReady)="onGridReady($event)"
+      (rowClicked)="onRowClicked($event)"
+      (CellClicked)="onCellClicked($event)"
+    >
+    </ag-grid-angular>
+  </div>
+</div>

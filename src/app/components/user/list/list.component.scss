@@ -1,0 +1,14 @@
+
+.btn{
+  &.btn-icon {
+    i {
+      &.color-red {
+        color: red;
+      }
+    }
+  }
+}
+
+select[name="kt_table_1_length"] {
+  width: 55px;
+}
