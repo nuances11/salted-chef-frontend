@@ -26,6 +26,9 @@ import { EditComponent } from './components/user/edit/edit.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ChefUploadComponent } from './components/chef/chef-upload/chef-upload.component';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
+import { ZipcodeRangeDirective } from './directives/zipcode-range.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddChefComponent } from './components/chef/add-chef/add-chef.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ import { NgxCsvParserModule } from 'ngx-csv-parser';
     CurrentComponent,
     DatabaseComponent,
     EditComponent,
-    ChefUploadComponent
+    ChefUploadComponent,
+    ZipcodeRangeDirective,
+    AddChefComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,8 @@ import { NgxCsvParserModule } from 'ngx-csv-parser';
     ProfileModule,
     DataTablesModule,
     AgGridModule.withComponents([]),
-    NgxCsvParserModule
+    NgxCsvParserModule,
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

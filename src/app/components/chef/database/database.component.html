@@ -27,10 +27,160 @@
       class="ag-theme-alpine"
       [rowData]="chefs"
       [columnDefs]="columnDefs"
-      (onGridReady)="onGridReady($event)"
+      [gridOptions]="gridOptions"
       (rowClicked)="onRowClicked($event)"
       (CellClicked)="onCellClicked($event)"
     >
     </ag-grid-angular>
+
+    <!--begin::Modal-->
+    <ng-template #modalData let-modal>
+      <form [formGroup]="inputForm"  (ngSubmit)="onSubmit()">
+        <input type="hidden" name="id" [value]="chef?.id">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ chef_name }}</h5><br>
+        <a [href]="chef?.candidate_overview" target="_blank" class="btn btn-sm btn-secondary btn-wide">Candidate Overview <i class="la la-eye"></i></a>
+        &nbsp;
+        <a [href]="chef?.resume" target="_blank" class="btn btn-sm btn-secondary btn-wide">Resume <i class="la la-newspaper-o"></i></a>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <div class="col-lg-4">
+            <label>Chef Type</label>
+            <select formControlName="chef_type" class="form-control">
+              <option value="chef_to_screen">Chef to screen</option>
+              <option value="current_chef">Current Chef</option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <label>Apply Date</label>
+            <div class="input-group date">
+              <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="model" value="{{ model }}" (ngModelChange)="changeDate($event)" ngbDatepicker #d="ngbDatepicker" readonly placeholder="{{ formatedDate(model) }}" />
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="d.toggle()">
+                  <i class="la la-calendar-check-o"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-6"[ngClass]="{'validated': inputForm.controls['name'].invalid && (inputForm.controls['name'].dirty || inputForm.controls['name'].touched)}" >
+            <label>Full Name:</label>
+            <input [ngClass]="{'is-invalid' : inputForm.controls['name'].invalid && (inputForm.controls['name'].dirty || inputForm.controls['name'].touched)}" type="text" class="form-control" formControlName="name" placeholder="Enter name" [value]="chef?.name">
+            <div *ngIf="inputForm.controls['name'].invalid && (inputForm.controls['name'].dirty || inputForm.controls['name'].touched)" class="invalid-feedback">
+              This field is required
+            </div>
+          </div>
+          <div class="col-lg-6" [ngClass]="{'validated': inputForm.controls['phone_number'].invalid && (inputForm.controls['phone_number'].dirty || inputForm.controls['phone_number'].touched)}" >
+            <label class="">Phone Number:</label>
+            <input [ngClass]="{'is-invalid' : inputForm.controls['phone_number'].invalid && (inputForm.controls['phone_number'].dirty || inputForm.controls['phone_number'].touched)}" type="text" class="form-control" formControlName="phone_number" placeholder="Enter contact number" [value]="chef?.phone_number">
+            <div *ngIf="inputForm.controls['phone_number'].invalid && (inputForm.controls['phone_number'].dirty || inputForm.controls['phone_number'].touched)" class="invalid-feedback">
+              This field is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-6">
+            <label class="">Email:</label>
+            <input type="email" [disabled]="true" class="form-control" [value]="chef?.email">
+          </div>
+          <div class="col-lg-6">
+            <label>Status:</label>
+            <select formControlName="status" class="form-control">
+              <option value="Hired">Hired</option>
+              <option value="Phone Screened">Phone Screened</option>
+              <option value="No Status">No Status</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Not Recommended"><span class="text-red">Not Recommended</span></option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-6">
+            <label>Job</label>
+            <input type="text" class="form-control" formControlName="job" placeholder="Enter job">
+          </div>
+          <div class="col-lg-3" [ngClass]="{'validated': inputForm.controls['city'].invalid && (inputForm.controls['city'].dirty || inputForm.controls['city'].touched)}" >
+            <label class="">City<span style="color:red;">*</span></label>
+            <input type="text" class="form-control" formControlName="city" placeholder="Enter city" [value]="chef?.city" [ngClass]="{'is-invalid' : inputForm.controls['city'].invalid && (inputForm.controls['city'].dirty || inputForm.controls['city'].touched)}">
+            <div *ngIf="inputForm.controls['city'].invalid && (inputForm.controls['city'].dirty || inputForm.controls['city'].touched)" class="invalid-feedback">
+              <span *ngIf="inputForm.controls['city'].errors?.required">
+                This field is required
+              </span>
+            </div>
+          </div>
+          <div class="col-lg-3" [ngClass]="{'validated': inputForm.controls['state'].invalid && (inputForm.controls['state'].dirty || inputForm.controls['state'].touched)}" >
+            <label class="">State<span style="color:red;">*</span></label>
+            <input [ngClass]="{'is-invalid' : inputForm.controls['state'].invalid && (inputForm.controls['state'].dirty || inputForm.controls['state'].touched)}" type="text" class="form-control" formControlName="state" placeholder="Enter state" [value]="chef?.state">
+            <div *ngIf="inputForm.controls['state'].invalid && (inputForm.controls['state'].dirty || inputForm.controls['state'].touched)" class="invalid-feedback">
+              <span *ngIf="inputForm.controls['state'].errors?.required">
+                This field is required
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-lg-6">
+            <label>Labels:</label>
+            <input type="text" class="form-control" formControlName="labels" placeholder="Enter label" [value]="chef?.labels">
+          </div>
+          <div class="col-lg-6">
+            <label class="">Rating:</label>
+            <select formControlName="rating" class="form-control">
+              <option value="" [selected]="!chef?.rating">No Ratings</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-5">
+            <label class="">Do not Contact:</label>
+            <select formControlName="do_not_contact" class="form-control">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-12">
+            <label class="">Notes</label>
+            <ng-container
+              formArrayName="items"
+              *ngFor="let item of userFormGroups.controls; let i = index";
+            >
+            <div [formGroupName]="i">
+              <div class="form-group ">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-danger btn-sm btn-remove-item" (click)="removeItem(i)" *ngIf="i > 0" type="button"><i class="la la-close"></i></button>
+                  </div>
+                  <input type="text" formControlName="notes" class="form-control" placeholder="Enter Notes">
+                </div>
+              </div>
+
+            </div>
+            </ng-container>
+            <button type="button" class="btn btn-primary btn-sm" (click)="addNotes()">Add Notes</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!inputForm.valid">
+          Save
+        </button>
+      </div>
+      </form>
+    </ng-template>
+    <!--end::Modal-->
+
   </div>
 </div>

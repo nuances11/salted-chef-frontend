@@ -1,1 +1,103 @@
-<p>input works!</p>
+<ng-container *ngIf="user">
+
+  <div class="kt-portlet">
+    <div class="kt-portlet__head">
+      <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+          Input Form
+        </h3>
+      </div>
+    </div>
+
+    <!--begin::Form-->
+    <form class="kt-form kt-form--label-right" [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+      <div class="kt-portlet__body">
+
+        <div *ngIf="hasErrors" class="alert alert-solid-danger alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
+          <div class="alert-icon"><i class="fa fa-exclamation-triangle"></i></div>
+            <div class="alert-text">
+              <!-- Errors -->
+              Please Input Required Fields
+            </div>
+          <div class="alert-close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"><i class="la la-close"></i></span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="hasSearchError" class="alert alert-solid-danger alert-bold fade show kt-margin-t-20 kt-margin-b-40" role="alert">
+          <div class="alert-icon"><i class="fa fa-exclamation-triangle"></i></div>
+            <div class="alert-text">
+              <!-- Errors -->
+              {{ searchErrorString }}
+            </div>
+          <div class="alert-close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"><i class="la la-close"></i></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-lg-3">
+            <label>Zip Code:</label>
+          </div>
+          <div class="col-lg-3">
+            <label class="">Client's Name:</label>
+          </div>
+        </div>
+
+        <div
+          formArrayName="items"
+          *ngFor="let item of userFormGroups.controls; let i = index;"
+           class="multiple-input"
+        >
+          <div [formGroupName]="i">
+            <!-- <input formControlName="zipcode" placeholder="Zipcode">
+            <input formControlName="clients_name" placeholder="Client's Name"> -->
+            <div class="form-group row">
+              <div class="col-lg-3">
+                <input type="text" formControlName="zipcode" class="form-control form-control-sm">
+              </div>
+              <div class="col-lg-3">
+                <input type="text" class="form-control form-control-sm" formControlName="clients_name">
+              </div>
+              <div class="col-lg-3">
+                <button class="btn btn-danger btn-sm btn-remove-item" *ngIf="i > 0" type="button" (click)="removeItem(i)"><i class="la la-close"></i></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="kt-separator kt-separator--space-lg kt-separator--border-dashed"></div>
+        <div class="form-group row">
+          <div class="col-lg-4">
+            <button class="btn btn-outline-brand btn-elevate" *ngIf="maxInput()" type="button" (click)="addItem()">Add Item</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="kt-portlet__foot">
+        <div class="kt-form__actions">
+          <div class="row">
+            <div class="col-lg-3">
+              <button type="submit" [disabled]="loading" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light': loading}" class="btn btn-brand btn-elevate">
+                <ng-container *ngIf="!loading">
+                  Submit
+                </ng-container>
+                <ng-container *ngIf="loading">
+                  Searching...
+                </ng-container>
+              </button>&nbsp;
+              <button type="reset" class="btn btn-warning btn-elevate">Reset Form</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!--end::Form-->
+  </div>
+
+</ng-container>

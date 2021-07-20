@@ -30,6 +30,7 @@ export class AddComponent implements OnInit {
     this.registerForm = this.fb.group({
       first_name: [''],
       last_name: [''],
+      role: ['human_resource'],
       email: [''],
       password: [''],
       password_confirmation: ['']

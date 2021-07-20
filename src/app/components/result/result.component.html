@@ -1,1 +1,171 @@
-<p>result works!</p>
+<div class="kt-portlet kt-portlet--mobile">
+  <div class="kt-portlet__head kt-portlet__head--lg">
+    <div class="kt-portlet__head-label">
+      <span class="kt-portlet__head-icon">
+        <i class="kt-font-brand flaticon2-line-chart"></i>
+      </span>
+      <h3 class="kt-portlet__head-title">
+        Search Result
+      </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+      <div class="kt-portlet__head-wrapper">
+        <div class="kt-portlet__head-actions">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kt-portlet__body">
+
+    <ng-container *ngIf="result">
+      <div class="form-group">
+        <label for="exampleSelect1">Select Result For : </label>
+        <select class="form-control"
+          #resultNav
+          (change)="onChangeResult(resultNav.value)"
+        >
+          <ng-container *ngFor="let item of result">
+            <option [value]="item.code">{{ item.code + " - " + item.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+
+      <h3>Current Chef : <span>{{ client_name }}</span></h3>
+      <ag-grid-angular
+        #agGridCurrentChef
+        rowAnimation
+        pagination
+        paginationPageSize="10"
+        style="width: 100%; height: 500px;"
+        class="ag-theme-alpine"
+        [gridOptions]="currentChefGridOptions"
+        [rowData]="current_chef"
+        [columnDefs]="current_chef_columnDefs"
+        (rowClicked)="onCurrentChefRowClicked($event)"
+        (CellClicked)="onCurrentChefCellClicked($event)"
+      >
+      </ag-grid-angular>
+      <br>
+      <h3>Chef to Screen : <span>{{ client_name }}</span></h3>
+      <ag-grid-angular
+        #agGridChefToScreen
+        rowAnimation
+        pagination
+        paginationPageSize="10"
+        style="width: 100%; height: 500px;"
+        class="ag-theme-alpine"
+        [gridOptions]="chefToScreenGridOptions"
+        [rowData]="chef_to_screen"
+        [columnDefs]="chef_to_screen_columnDefs"
+        (rowClicked)="onChefToScreenRowClicked($event)"
+        (CellClicked)="onChefToScreenCellClicked($event)"
+      >
+      </ag-grid-angular>
+
+    </ng-container>
+
+    <!--begin::Modal-->
+    <ng-template #modalData let-modal>
+      <form [formGroup]="inputForm"  (ngSubmit)="onSubmit()">
+        <input type="hidden" name="id" [value]="chef?.id">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ chef_name }}</h5><br>
+        <a [href]="chef?.candidate_overview" target="_blank" class="btn btn-sm btn-secondary btn-wide">Candidate Overview <i class="la la-eye"></i></a>
+        &nbsp;
+        <a [href]="chef?.resume" target="_blank" class="btn btn-sm btn-secondary btn-wide">Resume <i class="la la-newspaper-o"></i></a>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group row">
+            <div class="col-lg-6"[ngClass]="{'validated': inputForm.controls['name'].invalid && (inputForm.controls['name'].dirty || inputForm.controls['name'].touched)}" >
+              <label>Full Name:</label>
+              <input [ngClass]="{'is-invalid' : inputForm.controls['name'].invalid && (inputForm.controls['name'].dirty || inputForm.controls['name'].touched)}" type="text" class="form-control" formControlName="name" placeholder="Enter name" [value]="chef?.name">
+              <div *ngIf="inputForm.controls['name'].invalid && (inputForm.controls['name'].dirty || inputForm.controls['name'].touched)" class="invalid-feedback">
+                This field is required
+              </div>
+            </div>
+            <div class="col-lg-6" [ngClass]="{'validated': inputForm.controls['phone_number'].invalid && (inputForm.controls['phone_number'].dirty || inputForm.controls['phone_number'].touched)}" >
+              <label class="">Phone Number:</label>
+              <input [ngClass]="{'is-invalid' : inputForm.controls['phone_number'].invalid && (inputForm.controls['phone_number'].dirty || inputForm.controls['phone_number'].touched)}" type="text" class="form-control" formControlName="phone_number" placeholder="Enter contact number" [value]="chef?.phone_number">
+              <div *ngIf="inputForm.controls['phone_number'].invalid && (inputForm.controls['phone_number'].dirty || inputForm.controls['phone_number'].touched)" class="invalid-feedback">
+                This field is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-6">
+              <label class="">Email:</label>
+              <input type="email" [disabled]="true" class="form-control" [value]="chef?.email">
+            </div>
+            <div class="col-lg-6">
+              <label>Status:</label>
+              <select formControlName="status" class="form-control">
+                <option value="Hired">Hired</option>
+                <option value="Phone Screened">Phone Screened</option>
+                <option value="No Status">No Status</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Not Recommended"><span class="text-red">Not Recommended</span></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-6">
+              <label>Labels:</label>
+              <input type="text" class="form-control" formControlName="labels" placeholder="Enter label" [value]="chef?.labels">
+            </div>
+            <div class="col-lg-6">
+              <label class="">Rating:</label>
+              <select formControlName="rating" class="form-control">
+                <option value="" [selected]="!chef?.rating">No Ratings</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-5">
+              <label class="">Do not Contact:</label>
+              <select formControlName="do_not_contact" class="form-control">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <label class="">Notes</label>
+              <ng-container
+                formArrayName="items"
+                *ngFor="let item of userFormGroups.controls; let i = index";
+              >
+              <div [formGroupName]="i">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-danger btn-sm btn-remove-item" (click)="removeItem(i)" *ngIf="i > 0" type="button"><i class="la la-close"></i></button>
+                    </div>
+                    <input type="text" formControlName="notes" class="form-control" placeholder="Enter Notes">
+                  </div>
+                </div>
+
+              </div>
+              </ng-container>
+              <button type="button" class="btn btn-primary btn-sm" (click)="addNotes()">Add Notes</button>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+      </form>
+    </ng-template>
+    <!--end::Modal-->
+
+  </div>
+</div>

@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
   columnDefs = [
     { headerName: 'Name', field: 'full_name', sortable: true, filter: true, flex: 1 },
     { headerName: 'Email', field: 'email', sortable: true, filter: true, flex: 1 },
-    { headerName: 'Role',field: 'role', sortable: true, filter: true, flex: 1 },
+    { headerName: 'Role',field: 'role_readable_name', sortable: true, filter: true, flex: 1 },
     { headerName: 'Account Created', valueGetter: this.getDate, sortable: true, flex: 1 }
   ];
 

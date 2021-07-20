@@ -2,18 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStateService } from 'src/app/service/shared/auth-state.service';
 import { AuthService } from 'src/app/service/shared/auth.service';
+import { PageService } from 'src/app/service/shared/page.service';
 import { TokenService } from 'src/app/service/shared/token.service';
-
-// User interface
-export class User {
-  full_name?: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  role?: string;
-  role_radable_name?: string;
-  id?: string;
-}
+import { User } from 'src/app/user';
 
 @Component({
   selector: 'app-page-header',
@@ -24,16 +15,25 @@ export class PageHeaderComponent implements OnInit {
 
   user?: User;
   isSignedIn?: boolean;
+  meta?: any;
+  metaTitle?: any;
+  metaDescription?: any;
 
   constructor(
     private auth: AuthStateService,
     public router: Router,
     public token: TokenService,
-    public authService: AuthService
+    public authService: AuthService,
+    public pageMeta: PageService
   ) {
     this.authService.profileUser().subscribe((data:any) => {
       this.user = data;
     })
+
+    this.meta = this.pageMeta.getMeta();
+    this.metaTitle = this.meta?.title;
+    this.metaDescription = this.meta?.description;
+
   }
 
   ngOnInit(): void {
@@ -43,10 +43,11 @@ export class PageHeaderComponent implements OnInit {
   signOut() {
     this.auth.setAuthState(false);
     this.token.removeToken();
-    this.router.navigate(['login'])
-    .then(() => {
-      window.location.reload();
-    });
+    // this.router.navigate(['login'])
+    window.location.replace("/login");
+    // .then(() => {
+    //   window.location.reload();
+    // });
   }
 
 }

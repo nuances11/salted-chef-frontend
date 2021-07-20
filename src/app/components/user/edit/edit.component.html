@@ -46,21 +46,6 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
-                  <div class="col-lg-9 col-xl-6">
-                    <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
-                      <div class="kt-avatar__holder" style="background-image: url(assets/media/users/300_25.jpg)"></div>
-                      <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
-                        <i class="fa fa-pen"></i>
-                        <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
-                      </label>
-                      <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
-                        <i class="fa fa-times"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
                   <label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
                   <div class="col-lg-9 col-xl-6">
                     <input class="form-control" name="first_name" type="text" [(ngModel)]="user.first_name">
@@ -70,6 +55,15 @@
                   <label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
                   <div class="col-lg-9 col-xl-6">
                     <input class="form-control" name="last_name" type="text" [(ngModel)]="user.last_name">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-3 col-lg-3 col-form-label">Role</label>
+                  <div class="col-lg-9 col-xl-6">
+                    <select name="role" [(ngModel)]="user.role" class="form-control">
+                      <option value="human_resource_manager">Human Resource Manager</option>
+                      <option value="human_resource">Human Resource</option>
+                    </select>
                   </div>
                 </div>
                 <div class="row">

@@ -11,3 +11,12 @@
     background: url(./assets/media/logos/logo-5.png) center center no-repeat;
   }
 }
+
+.ag-theme-alpine {
+  .ag-row {
+    .not-recommended {
+      background: lightcoral;
+    }
+
+  }
+}

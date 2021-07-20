@@ -1,4 +1,5 @@
 export class Chef {
+  id?:string;
   job?: string;
   city?: string;
   state?: string;
@@ -15,4 +16,5 @@ export class Chef {
   chef_type?: string;
   zipcode?: string;
   data?: object;
+  do_not_contact?: string;
 }

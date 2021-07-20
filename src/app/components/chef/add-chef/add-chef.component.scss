@@ -1,0 +1,15 @@
+.btn-remove-item {
+  &.btn-sm {
+    padding: 0.5rem 0.5rem;
+  }
+  i {
+    margin-right: 0;
+    color: white;
+  }
+}
+
+.kt-header {
+  &.kt-header--fixed {
+    z-index: 95;
+  }
+}

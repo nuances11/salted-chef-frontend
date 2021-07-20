@@ -8,5 +8,10 @@ export class User {
   role_radable_name?: string;
   id?: string;
   password?: string;
+  old_password?: string;
+  new_password?: string;
+  new_password_confirmation?: string;
   confirm_password?: string;
+  access_token?: string;
+
 }

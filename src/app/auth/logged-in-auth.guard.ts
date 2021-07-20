@@ -22,7 +22,7 @@ export class LoggedInAuthGuard implements CanActivate {
   checkLogin(): boolean {
     if (this.tokenService._isLoggedIn) {
 
-      this.router.navigate(['/profile'])
+      this.router.navigate(['/zipcode/input'])
       return false;
 
     }else {

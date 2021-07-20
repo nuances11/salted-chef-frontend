@@ -77,7 +77,7 @@ export class EditComponent implements OnInit {
         },
         () => {
           this.showAlert = true;
-          this.alertString = 'User Created Successfully!'
+          this.alertString = 'User Updated Successfully!'
           // this.router.navigate(['login']);
         }
       )

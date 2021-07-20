@@ -22,6 +22,7 @@ export class User {
   styleUrls: ['./log-in.component.scss']
 })
 export class LogInComponent implements OnInit {
+
   isSignedIn?: boolean;
   user?: User;
   return: string = '';
@@ -46,6 +47,7 @@ export class LogInComponent implements OnInit {
 
     this.authState.userAuthState.subscribe(val => {
         this.isSignedIn = val;
+        console.log('isSignedIn', this.isSignedIn);
     });
 
   }
@@ -60,7 +62,6 @@ export class LogInComponent implements OnInit {
     this.authService.signin(this.loginForm.value).subscribe(
       (result: any) => {
         this.responseHandler(result);
-        console.log(result);
       },
       (error: any) => {
         this.errors.email = error.error.email;
@@ -69,17 +70,18 @@ export class LogInComponent implements OnInit {
       },() => {
         this.authState.setAuthState(true);
         this.loginForm.reset();
-        this.router.navigate(['/profile'])
-          .then(() => {
-            window.location.reload();
-        });
+        window.location.replace("/zipcode/input");
+        // this.router.navigate(['/zipcode/input'])
+        //   .then(() => {
+        //     window.location.reload();
+        // });
       }
     );
 }
 
 // Handle response
 responseHandler(data: any){
-  this.token.handleData(data.access_token);
+  this.token.handleData(data);
 }
 
 }
